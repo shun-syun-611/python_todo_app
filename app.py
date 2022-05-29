@@ -39,5 +39,13 @@ def read(id):
 
     return render_template('detail.html', post=post)
 
+@app.route('/delete/<int:id>')
+def delete(id):
+    post = Post.query.get(id)
+
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/')
+
 if __name__ == "__main__":
     app.run(debug=True)
