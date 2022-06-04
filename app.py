@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
@@ -15,7 +15,7 @@ class Post(db.Model):
 def index():
     if request.method == "GET":
         posts = Post.query.order_by(Post.due).all()
-        return render_template('index.html', posts=posts)
+        return render_template('index.html', posts=posts, today=date.today())
     
     if request.method == "POST":
         title = request.form.get("title")
